@@ -5,17 +5,17 @@
 ** Examples
 #+BEGIN_SRC fish
   > todo -a example        # add task
-  Added item: * TODO [\#B] example
+  Added item: * TODO [#B] example
   
   > todo -a "example" -s A # add task with priority
-  Added item: * TODO [\#A] important example
+  Added item: * TODO [#A] important example
   
   > todo                   # show tasks
-  TODO | [\#A] | example
-  TODO | [\#B] | example
+  TODO | [#A] | example
+  TODO | [#B] | example
   
   > todo -p A              # priority filtering
-  TODO | [\#A] | example
+  TODO | [#A] | example
 #+END_SRC
 ** Features:
 *** [[https://github.com/alecthomas/devtodo][DevTodo]]-like syntax:
@@ -27,8 +27,8 @@
 *** Files stored in org format:
 #+BEGIN_SRC fish
   > cat ~/turbotodo.org
-  * TODO [\#B] example
-  * TODO [\#A] example
+  * TODO [#B] example
+  * TODO [#A] example
 #+END_SRC
 *** Org Mode Features (not yet implemented):
     - tags
