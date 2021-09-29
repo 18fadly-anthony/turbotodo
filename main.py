@@ -55,14 +55,9 @@ def parse_org(filename):
 
 
 def print_todo(item):
-    sys.stdout.write('TODO')
-    if len(item) > 3:
-        for i in (2, len(item) - 1):
-            sys.stdout.write(' | ')
-            sys.stdout.write(str(item[i]))
-    elif len(item) > 2:
-        sys.stdout.write(' | ')
-        sys.stdout.write(str(item[2]))
+    for i in range(2, len(item)):
+        sys.stdout.write(' ')
+        sys.stdout.write(item[i])
     print()
 
 
