@@ -19,6 +19,19 @@ def read_file_to_array(filename):
         return(content_array)
 
 
+def file_append(filename, contents):
+    f = open(filename, "a")
+    f.write(contents)
+    f.close()
+
+
+def add_org_item(task, priority, filename):
+    item_to_add = '* TODO [#' + priority + '] ' + task
+    file_append(filename, item_to_add)
+    file_append(filename, '\n')
+    print('Added item: ' + item_to_add)
+
+
 def parse_org(filename):
     result = []
     item = []
@@ -79,7 +92,35 @@ def main():
         help = 'priority filter e.g. A, B'
     )
 
+    parser.add_argument(
+        '-a',
+        '--add',
+        metavar = '<task>',
+        nargs = 1,
+        type = str,
+        default = [None],
+        help = 'add task'
+    )
+
+    parser.add_argument(
+        '-s',
+        '--set-priority',
+        metavar = '<priority>',
+        nargs = 1,
+        type = str,
+        default = ['B'],
+        help = 'priority for new task'
+    )
+
     args = parser.parse_args()
+
+    if args.add != [None]:
+        if os.path.exists(args.file[0]) or args.file[0] == default_file:
+            add_org_item(args.add[0], args.set_priority[0], args.file[0])
+        else:
+            print("File not found: " + str(args.file[0]))
+        exit()
+
 
     if os.path.exists(args.file[0]):
         org_items = (parse_org(args.file[0]))
