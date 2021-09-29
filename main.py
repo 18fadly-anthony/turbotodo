@@ -40,6 +40,18 @@ def parse_org(filename):
     return result
 
 
+def print_todo(item):
+    sys.stdout.write('TODO')
+    if len(item) > 3:
+        for i in (2, len(item) - 1):
+            sys.stdout.write(' | ')
+            sys.stdout.write(str(item[i]))
+    elif len(item) > 2:
+        sys.stdout.write(' | ')
+        sys.stdout.write(str(item[2]))
+    print()
+
+
 def main():
     if len(sys.argv) == 1: # no argument, just display default file
         if os.path.exists(default_file):
@@ -47,17 +59,17 @@ def main():
             # print by priority
             for i in org_items:
                 if (i[0][2]) == '[#A]':
-                    print(i[0])
+                    print_todo(i[0])
             for i in org_items:
                 if (i[0][2]) == '[#B]':
-                    print(i[0])
+                    print_todo(i[0])
             for i in org_items:
                 # Default priority is between B and C
                 if (i[0][2]) != '[#A]' and (i[0][2]) != '[#B]' and (i[0][2]) != '[#C]':
-                    print(i[0])
+                    print_todo(i[0])
             for i in org_items:
                 if (i[0][2]) == '[#C]':
-                    print(i[0])
+                    print_todo(i[0])
 
 
 if __name__ == "__main__":
