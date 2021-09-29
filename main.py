@@ -10,6 +10,7 @@ home = os.path.expanduser('~')
 default_file = (home + "/turbotodo.org")
 cwd = os.getcwd()
 
+
 def read_file_to_array(filename):
     content_array = []
     with open(filename) as f:
@@ -53,23 +54,39 @@ def print_todo(item):
 
 
 def main():
-    if len(sys.argv) == 1: # no argument, just display default file
-        if os.path.exists(default_file):
-            org_items = (parse_org(default_file))
-            # print by priority
-            for i in org_items:
-                if (i[0][2]) == '[#A]':
-                    print_todo(i[0])
-            for i in org_items:
-                if (i[0][2]) == '[#B]':
-                    print_todo(i[0])
-            for i in org_items:
-                # Default priority is between B and C
-                if (i[0][2]) != '[#A]' and (i[0][2]) != '[#B]' and (i[0][2]) != '[#C]':
-                    print_todo(i[0])
-            for i in org_items:
-                if (i[0][2]) == '[#C]':
-                    print_todo(i[0])
+    parser = argparse.ArgumentParser(
+        description = '''TurboTODO''',
+        epilog = '''Copyright (c) Anthony Fadly (18fadly.anthony@gmail.com)'''
+    )
+
+    parser.add_argument(
+        '-f',
+        '--file',
+        metavar = '<file>',
+        nargs = 1,
+        type = str,
+        default = [default_file],
+        help = 'org file, default: ' + default_file
+    )
+
+    args = parser.parse_args()
+
+    if os.path.exists(args.file[0]):
+        org_items = (parse_org(args.file[0]))
+        # print by priority
+        for i in org_items:
+            if (i[0][2]) == '[#A]':
+                print_todo(i[0])
+        for i in org_items:
+            if (i[0][2]) == '[#B]':
+                print_todo(i[0])
+        for i in org_items:
+            # Default priority is between B and C
+            if (i[0][2]) != '[#A]' and (i[0][2]) != '[#B]' and (i[0][2]) != '[#C]':
+                print_todo(i[0])
+        for i in org_items:
+            if (i[0][2]) == '[#C]':
+                print_todo(i[0])
 
 
 if __name__ == "__main__":
