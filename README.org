@@ -1,0 +1,22 @@
+#+TITLE: TurboTODO
+#+AUTHOR: Anthony Fadly
+#+LATEX_HEADER: \usepackage[margin=1in]{geometry}
+#+OPTIONS: toc:nil
+** The best CLI TODO Program with Org-Mode Support
+** Features (not yet implemented):
+*** [[https://github.com/alecthomas/devtodo][DevTodo]]-like syntax:
+#+BEGIN_SRC fish
+  todo -a, --add [-p <priority>] <text> # add task
+  todo --file <file>                    # use a specific org file (default: ~/turbotodo.org)
+  todo --priority-filter <priority>     # filter by priority
+  todo --due-filter <date>              # filter by due date
+#+END_SRC
+*** Org Mode Features:
+    - tags
+    - scheduled due date and deadline
+      - due time
+      - repeaters
+      - delay
+    - arbitrary properties
+    - arbitrary comments
+    - colors
