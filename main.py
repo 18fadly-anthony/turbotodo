@@ -69,6 +69,16 @@ def main():
         help = 'org file, default: ' + default_file
     )
 
+    parser.add_argument(
+        '-p',
+        '--priority',
+        metavar = '<priority>',
+        nargs = 1,
+        type = str,
+        default = ['C'],
+        help = 'priority filter e.g. A, B'
+    )
+
     args = parser.parse_args()
 
     if os.path.exists(args.file[0]):
@@ -77,9 +87,13 @@ def main():
         for i in org_items:
             if (i[0][2]) == '[#A]':
                 print_todo(i[0])
+        if args.priority[0] == 'A':
+            exit()
         for i in org_items:
             if (i[0][2]) == '[#B]':
                 print_todo(i[0])
+        if args.priority[0] == 'B':
+            exit()
         for i in org_items:
             # Default priority is between B and C
             if (i[0][2]) != '[#A]' and (i[0][2]) != '[#B]' and (i[0][2]) != '[#C]':
