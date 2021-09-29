@@ -7,8 +7,8 @@
   > todo -a example        # add task
   Added item: * TODO [#B] example
   
-  > todo -a "example" -s A # add task with priority
-  Added item: * TODO [#A] important example
+  > todo -a example -s A # add task with priority
+  Added item: * TODO [#A] example
   
   > todo                   # show tasks
   TODO | [#A] | example
