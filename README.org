@@ -2,12 +2,33 @@
 #+AUTHOR: Anthony Fadly
 #+LATEX_HEADER: \usepackage[margin=1in]{geometry}
 #+OPTIONS: toc:nil
+** Examples
+#+BEGIN_SRC fish
+  > todo -a example        # add task
+  Added item: * TODO [\#B] example
+  
+  > todo -a "example" -s A # add task with priority
+  Added item: * TODO [\#A] important example
+  
+  > todo                   # show tasks
+  TODO | [\#A] | example
+  TODO | [\#B] | example
+  
+  > todo -p A              # priority filtering
+  TODO | [\#A] | example
+#+END_SRC
 ** Features:
 *** [[https://github.com/alecthomas/devtodo][DevTodo]]-like syntax:
 #+BEGIN_SRC fish
   todo -a <task> [-s <priority>] # add task
   todo -f <file>                 # use a specific org file (default: ~/turbotodo.org)
   todo -p <priority>             # filter by priority
+#+END_SRC
+*** Files stored in org format:
+#+BEGIN_SRC fish
+  > cat ~/turbotodo.org
+  * TODO [\#B] example
+  * TODO [\#A] example
 #+END_SRC
 *** Org Mode Features (not yet implemented):
     - tags
