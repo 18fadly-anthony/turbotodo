@@ -55,10 +55,12 @@ def parse_org(filename):
 
 
 def print_todo(item):
+    result = "TODO"
+    sys.stdout.write("TODO")
     for i in range(2, len(item)):
-        sys.stdout.write(' ')
-        sys.stdout.write(item[i])
-    print()
+        result += (' ')
+        result += (item[i])
+    print(result)
 
 
 def main():
