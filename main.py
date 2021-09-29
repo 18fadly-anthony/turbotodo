@@ -10,6 +10,17 @@ home = os.path.expanduser('~')
 default_file = (home + "/turbotodo.org")
 cwd = os.getcwd()
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
 
 def read_file_to_array(filename):
     content_array = []
@@ -55,12 +66,11 @@ def parse_org(filename):
 
 
 def print_todo(item):
-    result = "TODO"
-    sys.stdout.write("TODO")
+    sys.stdout.write(bcolors.OKCYAN + "TODO")
     for i in range(2, len(item)):
-        result += (' ')
-        result += (item[i])
-    print(result)
+        sys.stdout.write(' ')
+        sys.stdout.write(bcolors.OKGREEN + item[i])
+    print()
 
 
 def main():
