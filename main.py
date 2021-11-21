@@ -61,7 +61,8 @@ def parse_org(filename):
                     result.append(item)
                     item = []
                     item.append(arr2)
-                    item.append(arr[i + 1])
+                    if i < len(arr) - 1:
+                        item.append(arr[i + 1])
             else:
                 item.append(arr2)
         else:
