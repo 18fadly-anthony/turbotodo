@@ -36,8 +36,10 @@ def file_append(filename, contents):
     f.close()
 
 
-def add_org_item(task, priority, filename):
+def add_org_item(task, priority, filename, tag):
     item_to_add = '* TODO [#' + priority + '] ' + task
+    if tag != None:
+        item_to_add += ' :' + tag + ':'
     file_append(filename, item_to_add)
     file_append(filename, '\n')
     print('Added item: ' + item_to_add)
@@ -119,18 +121,30 @@ def main():
         help = 'priority for new task'
     )
 
+    parser.add_argument(
+        '-t',
+        '--tag',
+        metavar = '<tag>',
+        nargs = 1,
+        type = str,
+        help = 'Tag to add or search'
+    )
+
     args = parser.parse_args()
 
     if args.add != [None]:
-        if os.path.exists(args.file[0]) or args.file[0] == default_file:
-            add_org_item(args.add[0], args.set_priority[0], args.file[0])
-        else:
-            print("File not found: " + str(args.file[0]))
+        add_org_item(args.add[0], args.set_priority[0], args.file[0], args.tag[0])
         exit()
 
 
     if os.path.exists(args.file[0]):
-        org_items = (parse_org(args.file[0]))
+        if args.tag == None:
+            org_items = parse_org(args.file[0])
+        else:
+            org_items = []
+            for i in parse_org(args.file[0]):
+                if ':' + args.tag[0] + ':' in i[0]:
+                    org_items.append(i)
         # print by priority
         for i in org_items:
             if (i[0][2]) == '[#A]':
@@ -149,6 +163,8 @@ def main():
         for i in org_items:
             if (i[0][2]) == '[#C]':
                 print_todo(i[0])
+    else:
+        print("File not found: " + str(args.file[0]))
 
 
 if __name__ == "__main__":

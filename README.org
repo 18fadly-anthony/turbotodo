@@ -31,11 +31,11 @@
   * TODO [#A] example
 #+END_SRC
 *** Org Mode Features (not yet implemented):
-    - tags
+    - tags (implemented)
     - scheduled due date and deadline
       - due time
       - repeaters
       - delay
     - arbitrary properties
     - arbitrary comments
-    - colors
+    - colors (implemented)
