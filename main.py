@@ -37,7 +37,7 @@ def file_append(filename, contents):
 
 
 def add_org_item(task, priority, filename, tag, comment):
-    item_to_add = '* TODO [#' + priority + '] ' + task
+    item_to_add = '\n* TODO [#' + priority + '] ' + task
     if tag != None:
         item_to_add += ' :' + tag[0] + ':'
     item_to_add += '\n'
@@ -51,7 +51,7 @@ def parse_org(filename):
     result = []
     item = []
     arr = read_file_to_array(filename)
-    for i in range(len(arr)):
+    for i in range(1, len(arr)):
         arr2 = arr[i].split(' ')
         if len(arr2) > 2:
             if arr2[0] == '*' and arr2[1] == 'TODO':
@@ -76,8 +76,11 @@ def print_todo(item):
         sys.stdout.write(' ')
         sys.stdout.write(bcolors.OKGREEN + item[0][i])
     if len(item) > 1:
-        sys.stdout.write(':\n     ')
-        sys.stdout.write(bcolors.WARNING + item[1])
+        sys.stdout.write('\n>    ')
+        if len(item[1]) > 1:
+            sys.stdout.write(bcolors.WARNING + str(item[1]))
+        else:
+            sys.stdout.write(bcolors.WARNING + item[1][0])
     print()
 
 
