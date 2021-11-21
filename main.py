@@ -37,6 +37,8 @@ def file_append(filename, contents):
 
 
 def flatten(array):
+    if isinstance(array, str):
+        return array
     result = ""
     for i in array:
         result += i
