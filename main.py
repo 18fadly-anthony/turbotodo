@@ -88,10 +88,7 @@ def print_todo(item):
         sys.stdout.write(bcolors.OKGREEN + item[0][i])
     if len(item) > 1:
         sys.stdout.write('\n>    ')
-        if len(item[1]) > 1:
-            sys.stdout.write(bcolors.WARNING + flatten(item[1]))
-        else:
-            sys.stdout.write(bcolors.WARNING + item[1][0])
+        sys.stdout.write(bcolors.WARNING + flatten(item[1]))
     print()
 
 
