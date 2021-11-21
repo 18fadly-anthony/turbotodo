@@ -36,6 +36,14 @@ def file_append(filename, contents):
     f.close()
 
 
+def flatten(array):
+    result = ""
+    for i in array:
+        result += i
+        result += " "
+    return result[:-1]
+
+
 def add_org_item(task, priority, filename, tag, comment):
     item_to_add = '\n* TODO [#' + priority + '] ' + task
     if tag != None:
@@ -79,7 +87,7 @@ def print_todo(item):
     if len(item) > 1:
         sys.stdout.write('\n>    ')
         if len(item[1]) > 1:
-            sys.stdout.write(bcolors.WARNING + str(item[1]))
+            sys.stdout.write(bcolors.WARNING + flatten(item[1]))
         else:
             sys.stdout.write(bcolors.WARNING + item[1][0])
     print()
