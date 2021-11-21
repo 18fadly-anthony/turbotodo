@@ -27,7 +27,7 @@ def read_file_to_array(filename):
     with open(filename) as f:
         for line in f:
             content_array.append(line.strip('\n'))
-        return(content_array)
+    return(content_array)
 
 
 def file_append(filename, contents):
@@ -36,12 +36,14 @@ def file_append(filename, contents):
     f.close()
 
 
-def add_org_item(task, priority, filename, tag):
+def add_org_item(task, priority, filename, tag, comment):
     item_to_add = '* TODO [#' + priority + '] ' + task
     if tag != None:
-        item_to_add += ' :' + tag + ':'
+        item_to_add += ' :' + tag[0] + ':'
+    item_to_add += '\n'
+    if comment != None:
+        item_to_add += comment[0]
     file_append(filename, item_to_add)
-    file_append(filename, '\n')
     print('Added item: ' + item_to_add)
 
 
@@ -49,8 +51,8 @@ def parse_org(filename):
     result = []
     item = []
     arr = read_file_to_array(filename)
-    for i in arr:
-        arr2 = i.split(' ')
+    for i in range(len(arr)):
+        arr2 = arr[i].split(' ')
         if len(arr2) > 2:
             if arr2[0] == '*' and arr2[1] == 'TODO':
                 if item == []:
@@ -59,6 +61,7 @@ def parse_org(filename):
                     result.append(item)
                     item = []
                     item.append(arr2)
+                    item.append(arr[i + 1])
             else:
                 item.append(arr2)
         else:
@@ -69,9 +72,12 @@ def parse_org(filename):
 
 def print_todo(item):
     sys.stdout.write(bcolors.OKCYAN + "TODO")
-    for i in range(2, len(item)):
+    for i in range(2, len(item[0])):
         sys.stdout.write(' ')
-        sys.stdout.write(bcolors.OKGREEN + item[i])
+        sys.stdout.write(bcolors.OKGREEN + item[0][i])
+    if len(item) > 1:
+        sys.stdout.write(':\n     ')
+        sys.stdout.write(bcolors.WARNING + item[1])
     print()
 
 
@@ -130,10 +136,19 @@ def main():
         help = 'Tag to add or search'
     )
 
+    parser.add_argument(
+        '-c',
+        '--comment',
+        metavar = '<comment>',
+        nargs = 1,
+        type = str,
+        help = 'comment to append to todo item'
+    )
+
     args = parser.parse_args()
 
     if args.add != [None]:
-        add_org_item(args.add[0], args.set_priority[0], args.file[0], args.tag[0])
+        add_org_item(args.add[0], args.set_priority[0], args.file[0], args.tag, args.comment)
         exit()
 
 
@@ -148,21 +163,21 @@ def main():
         # print by priority
         for i in org_items:
             if (i[0][2]) == '[#A]':
-                print_todo(i[0])
+                print_todo(i)
         if args.priority[0] == 'A':
             exit()
         for i in org_items:
             if (i[0][2]) == '[#B]':
-                print_todo(i[0])
+                print_todo(i)
         if args.priority[0] == 'B':
             exit()
         for i in org_items:
             # Default priority is between B and C
             if (i[0][2]) != '[#A]' and (i[0][2]) != '[#B]' and (i[0][2]) != '[#C]':
-                print_todo(i[0])
+                print_todo(i)
         for i in org_items:
             if (i[0][2]) == '[#C]':
-                print_todo(i[0])
+                print_todo(i)
     else:
         print("File not found: " + str(args.file[0]))
 
